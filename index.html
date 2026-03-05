@@ -1,0 +1,932 @@
+ (cd "$(git rev-parse --show-toplevel)" && git apply --3way <<'EOF' 
+diff --git a/index.html b/index.html
+index 2055802ec7942624f75de2999873bad7c2d41873..04f9c031a9dca016eb29ad5472a86e69188214bb 100644
+--- a/index.html
++++ b/index.html
+@@ -1,711 +1,237 @@
+-<!DOCTYPE html>
++<!doctype html>
+ <html lang="ru">
+ <head>
+-    <meta charset="UTF-8">
+-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+-    <title>Адвокат Алиева Анжела Геннадьевна | Санкт-Петербург</title>
+-    <script src="https://cdn.tailwindcss.com"></script>
+-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+-    <style>
+-        body {
+-            font-family: 'Montserrat', sans-serif;
+-            scroll-behavior: smooth;
+-        }
+-        .gradient-bg {
+-            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+-        }
+-        .text-gradient {
+-            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+-            -webkit-background-clip: text;
+-            background-clip: text;
+-            color: transparent;
+-        }
+-        .chat-btn {
+-            animation: pulse 2s infinite;
+-        }
+-        @keyframes pulse {
+-            0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7); }
+-            70% { box-shadow: 0 0 0 10px rgba(59, 130, 246, 0); }
+-            100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
+-        }
+-        .service-card:hover {
+-            transform: translateY(-5px);
+-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+-        }
+-    </style>
++  <meta charset="utf-8" />
++  <meta name="viewport" content="width=device-width,initial-scale=1" />
++  <meta name="description" content="LinguaTrack Pro — рабочая платформа репетитора английского: расписание, платежи, задания и ИИ-конструктор уроков." />
++  <title>LinguaTrack Pro — платформа репетитора английского</title>
++  <link rel="preconnect" href="https://fonts.googleapis.com" />
++  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
++  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet" />
++  <link rel="stylesheet" href="style.css" />
+ </head>
+-<body class="bg-gray-50">
+-    <!-- Floating Contact Button -->
+-    <div class="fixed bottom-6 right-6 z-50 flex flex-col items-end space-y-3">
+-        <div id="chat-window" class="hidden w-80 bg-white rounded-lg shadow-xl overflow-hidden transform transition-all duration-300 ease-in-out">
+-            <div class="bg-indigo-600 text-white p-3 flex justify-between items-center">
+-                <h3 class="font-semibold">Чат с адвокатом</h3>
+-                <button id="close-chat" class="text-white hover:text-gray-200">
+-                    <i class="fas fa-times"></i>
+-                </button>
+-            </div>
+-            <div id="chat-messages" class="h-64 p-4 overflow-y-auto bg-gray-50">
+-                <div class="mb-4">
+-                    <div class="bg-indigo-100 text-gray-800 rounded-lg p-3 max-w-xs">
+-                        <p>Здравствуйте! Чем могу помочь?</p>
+-                    </div>
+-                </div>
+-            </div>
+-            <div class="p-3 border-t border-gray-200">
+-                <div class="flex space-x-2">
+-                    <input type="text" id="chat-input" placeholder="Введите сообщение..." class="flex-1 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+-                    <button id="send-message" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition">
+-                        <i class="fas fa-paper-plane"></i>
+-                    </button>
+-                </div>
+-            </div>
+-        </div>
+-        <button id="chat-btn" class="chat-btn bg-indigo-600 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg hover:bg-indigo-700 transition">
+-            <i class="fas fa-comments text-xl"></i>
+-        </button>
++<body>
++  <header class="topbar">
++    <div class="wrap topbar__inner">
++      <a class="brand" href="#home">LinguaTrack <span>Pro</span></a>
++      <nav class="menu" aria-label="Навигация">
++        <a href="#schedule">Календарь</a>
++        <a href="#billing">Платежи</a>
++        <a href="#planner">Планировщик</a>
++        <a href="#cabinet">Кабинет</a>
++        <a href="#homework">Домашка</a>
++      </nav>
++      <button class="btn btn--dark" data-scroll="#cabinet">Войти</button>
+     </div>
++  </header>
+ 
+-    <!-- Header -->
+-    <header class="gradient-bg sticky top-0 z-40 shadow-sm">
+-        <div class="container mx-auto px-4 py-4">
+-            <div class="flex justify-between items-center">
+-                <div class="flex items-center space-x-2">
+-                    <div class="w-10 h-10 bg-indigo-600 rounded-full flex items-center justify-center">
+-                        <i class="fas fa-balance-scale text-white"></i>
+-                    </div>
+-                    <h1 class="text-xl font-bold text-gray-800">Алиева А.Г.</h1>
+-                </div>
+-                <div class="hidden md:flex items-center space-x-8">
+-                    <a href="#about" class="text-gray-700 hover:text-indigo-600 transition">Обо мне</a>
+-                    <a href="#services" class="text-gray-700 hover:text-indigo-600 transition">Услуги</a>
+-                    <a href="#experience" class="text-gray-700 hover:text-indigo-600 transition">Опыт</a>
+-                    <a href="#contacts" class="text-gray-700 hover:text-indigo-600 transition">Контакты</a>
+-                </div>
+-                <div class="flex items-center space-x-4">
+-                    <a href="tel:89190221318" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition hidden sm:block">
+-                        <i class="fas fa-phone-alt mr-2"></i>8 (919) 022-13-18
+-                    </a>
+-                    <button class="md:hidden text-gray-700" id="mobile-menu-btn">
+-                        <i class="fas fa-bars text-2xl"></i>
+-                    </button>
+-                </div>
+-            </div>
+-        </div>
+-        <!-- Mobile Menu -->
+-        <div id="mobile-menu" class="hidden md:hidden bg-white py-4 px-4 shadow-lg">
+-            <div class="flex flex-col space-y-4">
+-                <a href="#about" class="text-gray-700 hover:text-indigo-600 transition">Обо мне</a>
+-                <a href="#services" class="text-gray-700 hover:text-indigo-600 transition">Услуги</a>
+-                <a href="#experience" class="text-gray-700 hover:text-indigo-600 transition">Опыт</a>
+-                <a href="#contacts" class="text-gray-700 hover:text-indigo-600 transition">Контакты</a>
+-                <a href="tel:89190221318" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition text-center">
+-                    <i class="fas fa-phone-alt mr-2"></i>8 (919) 022-13-18
+-                </a>
+-            </div>
+-        </div>
+-    </header>
+-
+-    <!-- Hero Section -->
+-    <section class="gradient-bg py-16 md:py-24">
+-        <div class="container mx-auto px-4">
+-            <div class="flex flex-col md:flex-row items-center">
+-                <div class="md:w-1/2 mb-10 md:mb-0">
+-                    <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-6">
+-                        <span class="text-gradient">Профессиональная</span> юридическая помощь в Санкт-Петербурге
+-                    </h1>
+-                    <p class="text-lg text-gray-600 mb-8">Более 15 лет успешной практики по уголовным, гражданским и семейным делам. Индивидуальный подход и защита ваших интересов в любой ситуации.</p>
+-                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+-                        <a href="#consultation" class="bg-indigo-600 text-white px-6 py-3 rounded-lg text-center font-medium hover:bg-indigo-700 transition shadow-md">
+-                            Получить консультацию
+-                        </a>
+-                        <a href="tel:89190221318" class="border border-indigo-600 text-indigo-600 px-6 py-3 rounded-lg text-center font-medium hover:bg-indigo-50 transition">
+-                            <i class="fas fa-phone-alt mr-2"></i>8 (919) 022-13-18
+-                        </a>
+-                    </div>
+-                </div>
+-                <div class="md:w-1/2 flex justify-center">
+-                    <div class="relative">
+-                        <div class="w-64 h-80 md:w-80 md:h-96 bg-indigo-100 rounded-lg shadow-xl overflow-hidden">
+-                            <!-- Placeholder for lawyer photo -->
+-                            <div class="w-full h-full bg-gradient-to-br from-indigo-200 to-purple-200 flex items-center justify-center">
+-                                <i class="fas fa-user-tie text-6xl text-indigo-500"></i>
+-                            </div>
+-                        </div>
+-                        <div class="absolute -bottom-6 -right-6 bg-white p-4 rounded-lg shadow-lg">
+-                            <div class="flex items-center">
+-                                <div class="bg-green-100 p-2 rounded-full mr-3">
+-                                    <i class="fas fa-check text-green-600"></i>
+-                                </div>
+-                                <p class="font-medium">Более 200<br>успешных дел</p>
+-                            </div>
+-                        </div>
+-                    </div>
+-                </div>
+-            </div>
++  <main id="home">
++    <section class="hero">
++      <div class="wrap hero__grid">
++        <div>
++          <p class="badge">Платформа для частного преподавателя</p>
++          <h1>Сайт, готовый к реальной работе с учениками</h1>
++          <p class="lead">Управляйте расписанием, платежами и прогрессом в одном месте. Встроенный ИИ помогает собирать персональные планы уроков за минуты.</p>
++          <div class="hero__actions">
++            <button class="btn btn--brand" data-scroll="#schedule">Открыть календарь</button>
++            <button class="btn btn--light" data-scroll="#planner">Создать план урока</button>
++          </div>
+         </div>
++        <aside class="stats" aria-label="Основные метрики">
++          <h2>Сегодня</h2>
++          <ul>
++            <li><b>3</b><span>урока в расписании</span></li>
++            <li><b>2</b><span>ДЗ на проверке</span></li>
++            <li><b>1</b><span>новая оплата</span></li>
++            <li><b>95%</b><span>посещаемость месяца</span></li>
++          </ul>
++        </aside>
++      </div>
+     </section>
+ 
+-    <!-- About Section -->
+-    <section id="about" class="py-16 bg-white">
+-        <div class="container mx-auto px-4">
+-            <div class="text-center mb-12">
+-                <h2 class="text-3xl font-bold text-gray-800 mb-4">Анжела Геннадьевна Алиева</h2>
+-                <div class="w-20 h-1 bg-indigo-600 mx-auto"></div>
+-            </div>
+-            <div class="flex flex-col md:flex-row items-center">
+-                <div class="md:w-1/3 mb-8 md:mb-0 flex justify-center">
+-                    <div class="w-64 h-64 rounded-full overflow-hidden border-4 border-indigo-100 shadow-lg">
+-                        <!-- Placeholder for profile photo -->
+-                        <div class="w-full h-full bg-gradient-to-br from-indigo-200 to-purple-200 flex items-center justify-center">
+-                            <i class="fas fa-user-tie text-5xl text-indigo-500"></i>
+-                        </div>
+-                    </div>
+-                </div>
+-                <div class="md:w-2/3 md:pl-12">
+-                    <h3 class="text-2xl font-semibold text-gray-800 mb-4">Профессиональный адвокат с 2010 года</h3>
+-                    <p class="text-gray-600 mb-6">Закончила Владимирский государственный университет по специальности "Юриспруденция" в 2006 году. С 2006 по 2010 год работала помощником адвоката, что дало бесценный практический опыт. С 2010 года - адвокат с самостоятельной практикой.</p>
+-                    <p class="text-gray-600 mb-6">В работе использую комплексный индивидуальный подход к каждому клиенту. Нахожу юридические решения даже в самых сложных ситуациях, выстраивая отношения с клиентами на основе доверия, эмпатии и четкого понимания реальных перспектив дела.</p>
+-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+-                        <div class="flex items-start">
+-                            <div class="bg-indigo-100 p-2 rounded-full mr-3 mt-1">
+-                                <i class="fas fa-gavel text-indigo-600"></i>
+-                            </div>
+-                            <p class="text-gray-700">Более 15 лет успешной судебной практики</p>
+-                        </div>
+-                        <div class="flex items-start">
+-                            <div class="bg-indigo-100 p-2 rounded-full mr-3 mt-1">
+-                                <i class="fas fa-hand-holding-heart text-indigo-600"></i>
+-                            </div>
+-                            <p class="text-gray-700">Индивидуальный подход к каждому клиенту</p>
+-                        </div>
+-                        <div class="flex items-start">
+-                            <div class="bg-indigo-100 p-2 rounded-full mr-3 mt-1">
+-                                <i class="fas fa-search text-indigo-600"></i>
+-                            </div>
+-                            <p class="text-gray-700">Тщательный анализ всех обстоятельств дела</p>
+-                        </div>
+-                        <div class="flex items-start">
+-                            <div class="bg-indigo-100 p-2 rounded-full mr-3 mt-1">
+-                                <i class="fas fa-lock-open text-indigo-600"></i>
+-                            </div>
+-                            <p class="text-gray-700">Срочный выезд к задержанным 24/7</p>
+-                        </div>
+-                    </div>
+-                </div>
+-            </div>
++    <section id="schedule" class="section">
++      <div class="wrap">
++        <div class="section__head">
++          <h2>Календарь уроков</h2>
++          <p>Формируйте сетку занятий, быстро бронируйте слоты и контролируйте занятость.</p>
+         </div>
+-    </section>
+-
+-    <!-- Services Section -->
+-    <section id="services" class="py-16 bg-gray-50">
+-        <div class="container mx-auto px-4">
+-            <div class="text-center mb-12">
+-                <h2 class="text-3xl font-bold text-gray-800 mb-4">Юридические услуги</h2>
+-                <p class="text-gray-600 max-w-2xl mx-auto">Комплексная юридическая помощь по различным направлениям права с гарантией конфиденциальности</p>
+-                <div class="w-20 h-1 bg-indigo-600 mx-auto mt-4"></div>
+-            </div>
+-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+-                <div class="service-card bg-white rounded-lg overflow-hidden shadow-md transition duration-300 ease-in-out hover:shadow-xl">
+-                    <div class="h-48 bg-indigo-100 flex items-center justify-center">
+-                        <i class="fas fa-handcuffs text-5xl text-indigo-600"></i>
+-                    </div>
+-                    <div class="p-6">
+-                        <h3 class="text-xl font-semibold text-gray-800 mb-3">Уголовные дела</h3>
+-                        <p class="text-gray-600 mb-4">Защита на всех стадиях уголовного процесса: от доследственной проверки до обжалования приговора.</p>
+-                        <ul class="space-y-2 text-gray-700">
+-                            <li class="flex items-start">
+-                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+-                                <span>Защита подозреваемых и обвиняемых</span>
+-                            </li>
+-                            <li class="flex items-start">
+-                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+-                                <span>Обжалование приговоров</span>
+-                            </li>
+-                            <li class="flex items-start">
+-                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+-                                <span>Срочный выезд к задержанным</span>
+-                            </li>
+-                        </ul>
+-                    </div>
+-                </div>
+-                <div class="service-card bg-white rounded-lg overflow-hidden shadow-md transition duration-300 ease-in-out hover:shadow-xl">
+-                    <div class="h-48 bg-indigo-100 flex items-center justify-center">
+-                        <i class="fas fa-home text-5xl text-indigo-600"></i>
+-                    </div>
+-                    <div class="p-6">
+-                        <h3 class="text-xl font-semibold text-gray-800 mb-3">Гражданские дела</h3>
+-                        <p class="text-gray-600 mb-4">Представление интересов в спорах по гражданско-правовым вопросам любой сложности.</p>
+-                        <ul class="space-y-2 text-gray-700">
+-                            <li class="flex items-start">
+-                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+-                                <span>Жилищные споры</span>
+-                            </li>
+-                            <li class="flex items-start">
+-                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+-                                <span>Наследственные дела</span>
+-                            </li>
+-                            <li class="flex items-start">
+-                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+-                                <span>Защита прав потребителей</span>
+-                            </li>
+-                        </ul>
+-                    </div>
+-                </div>
+-                <div class="service-card bg-white rounded-lg overflow-hidden shadow-md transition duration-300 ease-in-out hover:shadow-xl">
+-                    <div class="h-48 bg-indigo-100 flex items-center justify-center">
+-                        <i class="fas fa-heart text-5xl text-indigo-600"></i>
+-                    </div>
+-                    <div class="p-6">
+-                        <h3 class="text-xl font-semibold text-gray-800 mb-3">Семейные дела</h3>
+-                        <p class="text-gray-600 mb-4">Юридическое сопровождение в сложных семейных ситуациях с учетом всех нюансов.</p>
+-                        <ul class="space-y-2 text-gray-700">
+-                            <li class="flex items-start">
+-                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+-                                <span>Развод и раздел имущества</span>
+-                            </li>
+-                            <li class="flex items-start">
+-                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+-                                <span>Споры о детях</span>
+-                            </li>
+-                            <li class="flex items-start">
+-                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+-                                <span>Алиментные обязательства</span>
+-                            </li>
+-                        </ul>
+-                    </div>
+-                </div>
+-            </div>
++        <div class="panel-grid panel-grid--2">
++          <article class="card">
++            <h3>Ближайшие слоты</h3>
++            <div class="table-wrap">
++              <table>
++                <thead>
++                  <tr><th>Дата</th><th>Время</th><th>Формат</th><th>Статус</th></tr>
++                </thead>
++                <tbody>
++                  <tr><td>Пн, 12 мая</td><td>17:00</td><td>Online</td><td><span class="pill pill--free">Свободно</span></td></tr>
++                  <tr><td>Вт, 13 мая</td><td>19:00</td><td>Offline</td><td><span class="pill pill--busy">Занято</span></td></tr>
++                  <tr><td>Чт, 15 мая</td><td>16:30</td><td>Online</td><td><span class="pill pill--free">Свободно</span></td></tr>
++                </tbody>
++              </table>
++            </div>
++          </article>
++          <article class="card">
++            <h3>Новая запись</h3>
++            <form id="bookingForm" class="form-stack">
++              <label>Имя ученика<input name="student" required placeholder="Например, София" /></label>
++              <label>Контакт<input name="contact" required placeholder="Telegram или email" /></label>
++              <label>Уровень
++                <select name="level" required>
++                  <option value="">Выберите</option>
++                  <option>A1-A2</option>
++                  <option>B1-B2</option>
++                  <option>C1-C2</option>
++                </select>
++              </label>
++              <label>Дата и время<input type="datetime-local" name="datetime" required /></label>
++              <button class="btn btn--brand" type="submit">Отправить запись</button>
++              <p id="bookingMsg" class="feedback" aria-live="polite"></p>
++            </form>
++          </article>
+         </div>
++      </div>
+     </section>
+ 
+-    <!-- Experience Section -->
+-    <section id="experience" class="py-16 bg-white">
+-        <div class="container mx-auto px-4">
+-            <div class="text-center mb-12">
+-                <h2 class="text-3xl font-bold text-gray-800 mb-4">Профессиональный опыт</h2>
+-                <p class="text-gray-600 max-w-2xl mx-auto">15 лет практики в крупнейших городах России с доказанной эффективностью</p>
+-                <div class="w-20 h-1 bg-indigo-600 mx-auto mt-4"></div>
+-            </div>
+-            <div class="max-w-4xl mx-auto">
+-                <div class="relative">
+-                    <!-- Timeline line -->
+-                    <div class="absolute left-4 md:left-1/2 h-full w-0.5 bg-indigo-200 transform -translate-x-1/2"></div>
+-                    
+-                    <!-- Timeline items -->
+-                    <div class="space-y-8">
+-                        <!-- Item 1 -->
+-                        <div class="relative flex flex-col md:flex-row items-center">
+-                            <div class="flex-1 md:pr-12 md:text-right mb-4 md:mb-0 order-1 md:order-none">
+-                                <h3 class="text-xl font-semibold text-gray-800">Получение статуса адвоката</h3>
+-                                <p class="text-indigo-600 font-medium">2010 год</p>
+-                                <p class="text-gray-600">После 4 лет работы помощником адвоката успешно сдала квалификационный экзамен и получила статус адвоката.</p>
+-                            </div>
+-                            <div class="w-8 h-8 bg-indigo-600 rounded-full flex items-center justify-center order-0 md:order-1 z-10">
+-                                <i class="fas fa-user-graduate text-white text-sm"></i>
+-                            </div>
+-                            <div class="flex-1 md:pl-12 order-2 md:hidden">
+-                                <h3 class="text-xl font-semibold text-gray-800">Получение статуса адвоката</h3>
+-                                <p class="text-indigo-600 font-medium">2010 год</p>
+-                                <p class="text-gray-600">После 4 лет работы помощником адвоката успешно сдала квалификационный экзамен и получила статус адвоката.</p>
+-                            </div>
+-                        </div>
+-                        
+-                        <!-- Item 2 -->
+-                        <div class="relative flex flex-col md:flex-row items-center">
+-                            <div class="flex-1 md:pr-12 md:text-right mb-4 md:mb-0 order-1">
+-                                <h3 class="text-xl font-semibold text-gray-800">Начало самостоятельной практики</h3>
+-                                <p class="text-indigo-600 font-medium">2010-2015</p>
+-                                <p class="text-gray-600">Формирование собственной клиентской базы, специализация на уголовных и семейных делах.</p>
+-                            </div>
+-                            <div class="w-8 h-8 bg-indigo-600 rounded-full flex items-center justify-center order-0 z-10">
+-                                <i class="fas fa-briefcase text-white text-sm"></i>
+-                            </div>
+-                            <div class="flex-1 md:pl-12 order-2 md:hidden">
+-                                <h3 class="text-xl font-semibold text-gray-800">Начало самостоятельной практики</h3>
+-                                <p class="text-indigo-600 font-medium">2010-2015</p>
+-                                <p class="text-gray-600">Формирование собственной клиентской базы, специализация на уголовных и семейных делах.</p>
+-                            </div>
+-                        </div>
+-                        
+-                        <!-- Item 3 -->
+-                        <div class="relative flex flex-col md:flex-row items-center">
+-                            <div class="flex-1 md:pr-12 md:text-right mb-4 md:mb-0 order-1 md:order-none">
+-                                <h3 class="text-xl font-semibold text-gray-800">Расширение практики</h3>
+-                                <p class="text-indigo-600 font-medium">2015-2020</p>
+-                                <p class="text-gray-600">Работа над сложными делами в различных регионах России, участие в резонансных процессах.</p>
+-                            </div>
+-                            <div class="w-8 h-8 bg-indigo-600 rounded-full flex items-center justify-center order-0 md:order-1 z-10">
+-                                <i class="fas fa-chart-line text-white text-sm"></i>
+-                            </div>
+-                            <div class="flex-1 md:pl-12 order-2 md:hidden">
+-                                <h3 class="text-xl font-semibold text-gray-800">Расширение практики</h3>
+-                                <p class="text-indigo-600 font-medium">2015-2020</p>
+-                                <p class="text-gray-600">Работа над сложными делами в различных регионах России, участие в резонансных процессах.</p>
+-                            </div>
+-                        </div>
+-                        
+-                        <!-- Item 4 -->
+-                        <div class="relative flex flex-col md:flex-row items-center">
+-                            <div class="flex-1 md:pr-12 md:text-right mb-4 md:mb-0 order-1">
+-                                <h3 class="text-xl font-semibold text-gray-800">Современная практика</h3>
+-                                <p class="text-indigo-600 font-medium">2020-настоящее время</p>
+-                                <p class="text-gray-600">Комплексный подход к решению юридических проблем, использование современных методов защиты, включая цифровые доказательства.</p>
+-                            </div>
+-                            <div class="w-8 h-8 bg-indigo-600 rounded-full flex items-center justify-center order-0 z-10">
+-                                <i class="fas fa-laptop-code text-white text-sm"></i>
+-                            </div>
+-                            <div class="flex-1 md:pl-12 order-2 md:hidden">
+-                                <h3 class="text-xl font-semibold text-gray-800">Современная практика</h3>
+-                                <p class="text-indigo-600 font-medium">2020-настоящее время</p>
+-                                <p class="text-gray-600">Комплексный подход к решению юридических проблем, использование современных методов защиты, включая цифровые доказательства.</p>
+-                            </div>
+-                        </div>
+-                    </div>
+-                </div>
+-            </div>
++    <section id="billing" class="section section--alt">
++      <div class="wrap">
++        <div class="section__head">
++          <h2>Платежи и тарифы</h2>
++          <p>Рабочая структура тарифов + журнал оплат ученика.</p>
++        </div>
++        <div class="panel-grid panel-grid--3">
++          <article class="card"><h3>Разовый</h3><p class="cost">2200 ₽</p><p>1 урок / 60 минут</p></article>
++          <article class="card"><h3>Пакет 8</h3><p class="cost">15800 ₽</p><p>Скидка 10%</p></article>
++          <article class="card"><h3>Интенсив</h3><p class="cost">25900 ₽</p><p>12 уроков + клуб</p></article>
+         </div>
++        <article class="card mt16">
++          <h3>Онлайн-оплата</h3>
++          <p>Подключите платежный провайдер (например, ЮKassa/Stripe) и используйте кнопку как реальный checkout.</p>
++          <div class="row">
++            <button id="payBtn" class="btn btn--brand" type="button">Открыть оплату</button>
++            <span id="payMsg" class="feedback" aria-live="polite"></span>
++          </div>
++        </article>
++      </div>
+     </section>
+ 
+-    <!-- Consultation Section -->
+-    <section id="consultation" class="py-16 bg-indigo-600 text-white">
+-        <div class="container mx-auto px-4">
+-            <div class="max-w-4xl mx-auto text-center mb-12">
+-                <h2 class="text-3xl font-bold mb-4">Бесплатная первичная консультация</h2>
+-                <p class="text-indigo-100 mb-6">Опишите свою ситуацию, и я помогу оценить перспективы и возможные варианты решения проблемы</p>
+-                <div class="w-20 h-1 bg-white mx-auto"></div>
+-            </div>
+-            <div class="max-w-2xl mx-auto bg-white rounded-lg shadow-xl overflow-hidden">
+-                <div class="p-6 md:p-8">
+-                    <form id="consultation-form" class="space-y-5">
+-                        <div>
+-                            <label for="name" class="block text-gray-700 font-medium mb-1">Ваше имя</label>
+-                            <input type="text" id="name" name="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" required>
+-                        </div>
+-                        <div>
+-                            <label for="phone" class="block text-gray-700 font-medium mb-1">Телефон</label>
+-                            <input type="tel" id="phone" name="phone" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" required>
+-                        </div>
+-                        <div>
+-                            <label for="question" class="block text-gray-700 font-medium mb-1">Опишите вашу ситуацию</label>
+-                            <textarea id="question" name="question" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" required></textarea>
+-                        </div>
+-                        <div class="pt-2">
+-                            <button type="submit" class="w-full bg-indigo-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-indigo-700 transition shadow-md">
+-                                Отправить запрос
+-                            </button>
+-                        </div>
+-                    </form>
+-                </div>
+-            </div>
++    <section id="planner" class="section">
++      <div class="wrap">
++        <div class="section__head">
++          <h2>Планировщик урока + ИИ</h2>
++          <p>Сначала методический шаблон, затем персонализация через ИИ.</p>
+         </div>
+-    </section>
++        <div class="panel-grid panel-grid--2">
++          <article class="card">
++            <h3>Быстрый шаблон</h3>
++            <form id="templateForm" class="form-stack">
++              <label>Тема<input name="topic" required placeholder="Conditionals" /></label>
++              <label>Цель<input name="goal" required placeholder="Уверенно использовать в речи" /></label>
++              <label>Тип урока
++                <select name="mode" required>
++                  <option value="">Выберите</option>
++                  <option>Grammar</option>
++                  <option>Speaking</option>
++                  <option>Exam prep</option>
++                </select>
++              </label>
++              <button class="btn btn--light" type="submit">Собрать структуру</button>
++            </form>
++            <div id="templateResult" class="result muted">Результат появится здесь.</div>
++          </article>
+ 
+-    <!-- Testimonials Section -->
+-    <section class="py-16 bg-gray-50">
+-        <div class="container mx-auto px-4">
+-            <div class="text-center mb-12">
+-                <h2 class="text-3xl font-bold text-gray-800 mb-4">Отзывы клиентов</h2>
+-                <p class="text-gray-600 max-w-2xl mx-auto">Что говорят люди, которым я помогла решить юридические проблемы</p>
+-                <div class="w-20 h-1 bg-indigo-600 mx-auto mt-4"></div>
+-            </div>
+-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+-                <div class="bg-white p-6 rounded-lg shadow-md">
+-                    <div class="flex items-center mb-4">
+-                        <div class="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center mr-4">
+-                            <i class="fas fa-user text-indigo-600"></i>
+-                        </div>
+-                        <div>
+-                            <h4 class="font-semibold text-gray-800">Александр Н.</h4>
+-                            <div class="flex text-yellow-400">
+-                                <i class="fas fa-star"></i>
+-                                <i class="fas fa-star"></i>
+-                                <i class="fas fa-star"></i>
+-                                <i class="fas fa-star"></i>
+-                                <i class="fas fa-star"></i>
+-                            </div>
+-                        </div>
+-                    </div>
+-                    <p class="text-gray-600">"Анжела Геннадьевна помогла мне в очень сложной ситуации с необоснованным обвинением. Ее профессионализм и внимание к деталям привели к полному прекращению дела. Очень благодарен!"</p>
+-                </div>
+-                <div class="bg-white p-6 rounded-lg shadow-md">
+-                    <div class="flex items-center mb-4">
+-                        <div class="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center mr-4">
+-                            <i class="fas fa-user text-indigo-600"></i>
+-                        </div>
+-                        <div>
+-                            <h4 class="font-semibold text-gray-800">Елена С.</h4>
+-                            <div class="flex text-yellow-400">
+-                                <i class="fas fa-star"></i>
+-                                <i class="fas fa-star"></i>
+-                                <i class="fas fa-star"></i>
+-                                <i class="fas fa-star"></i>
+-                                <i class="fas fa-star"></i>
+-                            </div>
+-                        </div>
+-                    </div>
+-                    <p class="text-gray-600">"При разводе и разделе имущества Анжела Геннадьевна защитила мои интересы наилучшим образом. Благодаря ее работе я сохранила квартиру и получила справедливую долю в бизнесе мужа."</p>
+-                </div>
+-                <div class="bg-white p-6 rounded-lg shadow-md">
+-                    <div class="flex items-center mb-4">
+-                        <div class="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center mr-4">
+-                            <i class="fas fa-user text-indigo-600"></i>
+-                        </div>
+-                        <div>
+-                            <h4 class="font-semibold text-gray-800">Михаил К.</h4>
+-                            <div class="flex text-yellow-400">
+-                                <i class="fas fa-star"></i>
+-                                <i class="fas fa-star"></i>
+-                                <i class="fas fa-star"></i>
+-                                <i class="fas fa-star"></i>
+-                                <i class="fas fa-star"></i>
+-                            </div>
+-                        </div>
+-                    </div>
+-                    <p class="text-gray-600">"Когда моего сына незаконно задержали, Анжела Геннадьевна приехала ночью и добилась его освобождения уже утром. Сейчас дело прекращено. Очень рекомендую этого адвоката!"</p>
+-                </div>
+-            </div>
++          <article class="card">
++            <h3>ИИ-помощник (production-ready)</h3>
++            <form id="aiForm" class="form-stack">
++              <label>Ученик<input name="student" required placeholder="Иван, 8 класс" /></label>
++              <label>Цель урока<input name="objective" required placeholder="Подготовка к speaking part" /></label>
++              <label>Интересы<input name="interests" placeholder="спорт, фильмы, технологии" /></label>
++              <label>API Key<input id="apiKey" type="password" placeholder="sk-..." /></label>
++              <label>Endpoint<input id="apiEndpoint" type="url" value="https://api.openai.com/v1/chat/completions" /></label>
++              <label>Модель<input id="apiModel" value="gpt-4o-mini" /></label>
++              <button id="aiBtn" class="btn btn--brand" type="submit">Сгенерировать через ИИ</button>
++              <p id="aiMsg" class="feedback" aria-live="polite"></p>
++            </form>
++            <div id="aiResult" class="result muted">Здесь будет персональный план на 60 минут.</div>
++          </article>
+         </div>
++      </div>
+     </section>
+ 
+-    <!-- Contacts Section -->
+-    <section id="contacts" class="py-16 bg-white">
+-        <div class="container mx-auto px-4">
+-            <div class="text-center mb-12">
+-                <h2 class="text-3xl font-bold text-gray-800 mb-4">Контакты</h2>
+-                <p class="text-gray-600 max-w-2xl mx-auto">Свяжитесь со мной удобным для вас способом</p>
+-                <div class="w-20 h-1 bg-indigo-600 mx-auto mt-4"></div>
+-            </div>
+-            <div class="flex flex-col md:flex-row">
+-                <div class="md:w-1/2 mb-10 md:mb-0 md:pr-8">
+-                    <div class="bg-gray-50 p-6 rounded-lg shadow-md h-full">
+-                        <h3 class="text-xl font-semibold text-gray-800 mb-6">Контактная информация</h3>
+-                        <div class="space-y-5">
+-                            <div class="flex items-start">
+-                                <div class="bg-indigo-100 p-2 rounded-full mr-4">
+-                                    <i class="fas fa-map-marker-alt text-indigo-600"></i>
+-                                </div>
+-                                <div>
+-                                    <h4 class="font-medium text-gray-800">Адрес офиса</h4>
+-                                    <p class="text-gray-600">Санкт-Петербург, Средний пр. В.О. д.48/27, лит. А, БЦ Арагорн</p>
+-                                </div>
+-                            </div>
+-                            <div class="flex items-start">
+-                                <div class="bg-indigo-100 p-2 rounded-full mr-4">
+-                                    <i class="fas fa-phone-alt text-indigo-600"></i>
+-                                </div>
+-                                <div>
+-                                    <h4 class="font-medium text-gray-800">Телефон</h4>
+-                                    <p class="text-gray-600">8 (919) 022-13-18</p>
+-                                    <div class="flex space-x-3 mt-2">
+-                                        <a href="https://wa.me/79190221318" class="text-green-500 hover:text-green-600">
+-                                            <i class="fab fa-whatsapp text-2xl"></i>
+-                                        </a>
+-                                        <a href="https://t.me/79190221318" class="text-blue-400 hover:text-blue-500">
+-                                            <i class="fab fa-telegram text-2xl"></i>
+-                                        </a>
+-                                    </div>
+-                                </div>
+-                            </div>
+-                            <div class="flex items-start">
+-                                <div class="bg-indigo-100 p-2 rounded-full mr-4">
+-                                    <i class="fas fa-envelope text-indigo-600"></i>
+-                                </div>
+-                                <div>
+-                                    <h4 class="font-medium text-gray-800">Электронная почта</h4>
+-                                    <p class="text-gray-600">advokat.alieva@yandex.ru</p>
+-                                </div>
+-                            </div>
+-                            <div class="flex items-start">
+-                                <div class="bg-indigo-100 p-2 rounded-full mr-4">
+-                                    <i class="fas fa-clock text-indigo-600"></i>
+-                                </div>
+-                                <div>
+-                                    <h4 class="font-medium text-gray-800">Часы работы</h4>
+-                                    <p class="text-gray-600">Пн-Пт: 9:00 - 19:00</p>
+-                                    <p class="text-gray-600">Сб: по предварительной записи</p>
+-                                    <p class="text-indigo-600 font-medium">Срочный выезд к задержанным - 24/7</p>
+-                                </div>
+-                            </div>
+-                        </div>
+-                    </div>
+-                </div>
+-                <div class="md:w-1/2">
+-                    <div class="bg-gray-50 p-6 rounded-lg shadow-md h-full">
+-                        <h3 class="text-xl font-semibold text-gray-800 mb-6">Как добраться</h3>
+-                        <div class="h-64 bg-gray-200 rounded-lg overflow-hidden mb-4">
+-                            <!-- Map placeholder -->
+-                            <div class="w-full h-full bg-gradient-to-br from-blue-100 to-indigo-100 flex items-center justify-center">
+-                                <i class="fas fa-map-marked-alt text-4xl text-indigo-500"></i>
+-                            </div>
+-                        </div>
+-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+-                            <div class="bg-white p-3 rounded-lg shadow-sm">
+-                                <h4 class="font-medium text-gray-800 mb-2"><i class="fas fa-subway text-indigo-600 mr-2"></i>Метро</h4>
+-                                <p class="text-gray-600 text-sm">Станция "Василеостровская", 10 минут пешком</p>
+-                            </div>
+-                            <div class="bg-white p-3 rounded-lg shadow-sm">
+-                                <h4 class="font-medium text-gray-800 mb-2"><i class="fas fa-bus text-indigo-600 mr-2"></i>Автобус</h4>
+-                                <p class="text-gray-600 text-sm">Остановка "Средний проспект", маршруты 1, 6, 128</p>
+-                            </div>
+-                        </div>
+-                    </div>
+-                </div>
+-            </div>
++    <section id="cabinet" class="section section--alt">
++      <div class="wrap">
++        <div class="section__head">
++          <h2>Личный кабинет ученика</h2>
++          <p>Доступ к прогрессу, урокам, домашним заданиям и балансу пакета.</p>
+         </div>
++        <div class="panel-grid panel-grid--2">
++          <article class="card">
++            <h3>Вход</h3>
++            <form id="loginForm" class="form-stack">
++              <label>Email<input name="email" type="email" required /></label>
++              <label>Пароль<input name="password" type="password" required /></label>
++              <button class="btn btn--brand" type="submit">Войти в кабинет</button>
++              <p id="loginMsg" class="feedback" aria-live="polite"></p>
++            </form>
++          </article>
++          <article id="dashboard" class="card">
++            <h3>Панель ученика</h3>
++            <ul class="list">
++              <li>Следующий урок: <b>Чт, 16:30</b></li>
++              <li>Прогресс модуля: <b>74%</b></li>
++              <li>Проверяется заданий: <b>2</b></li>
++              <li>Осталось уроков в пакете: <b>4</b></li>
++            </ul>
++          </article>
++        </div>
++      </div>
+     </section>
+ 
+-    <!-- Footer -->
+-    <footer class="bg-gray-800 text-white py-8">
+-        <div class="container mx-auto px-4">
+-            <div class="flex flex-col md:flex-row justify-between items-center">
+-                <div class="mb-6 md:mb-0">
+-                    <div class="flex items-center space-x-2">
+-                        <div class="w-8 h-8 bg-indigo-600 rounded-full flex items-center justify-center">
+-                            <i class="fas fa-balance-scale text-white"></i>
+-                        </div>
+-                        <h2 class="text-xl font-bold">Алиева А.Г.</h2>
+-                    </div>
+-                    <p class="text-gray-400 mt-2">Профессиональный адвокат в Санкт-Петербурге</p>
+-                </div>
+-                <div class="flex flex-col items-center md:items-end">
+-                    <a href="tel:89190221318" class="text-xl font-semibold mb-2 hover:text-indigo-400 transition">8 (919) 022-13-18</a>
+-                    <div class="flex space-x-4 mb-4">
+-                        <a href="https://wa.me/79190221318" class="text-green-400 hover:text-green-300 text-2xl">
+-                            <i class="fab fa-whatsapp"></i>
+-                        </a>
+-                        <a href="https://t.me/79190221318" class="text-blue-400 hover:text-blue-300 text-2xl">
+-                            <i class="fab fa-telegram"></i>
+-                        </a>
+-                        <a href="mailto:advokat.alieva@yandex.ru" class="text-red-400 hover:text-red-300 text-2xl">
+-                            <i class="fas fa-envelope"></i>
+-                        </a>
+-                    </div>
+-                    <p class="text-gray-400 text-sm">© 2023 Адвокат Алиева А.Г. Все права защищены</p>
+-                </div>
+-            </div>
++    <section id="homework" class="section">
++      <div class="wrap">
++        <div class="section__head">
++          <h2>Домашние задания</h2>
++          <p>Выполнение онлайн и генерация материалов для офлайн-урока.</p>
+         </div>
+-    </footer>
+-
+-    <script>
+-        // Mobile menu toggle
+-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+-        const mobileMenu = document.getElementById('mobile-menu');
+-        
+-        mobileMenuBtn.addEventListener('click', () => {
+-            mobileMenu.classList.toggle('hidden');
+-        });
+-
+-        // Chat toggle
+-        const chatBtn = document.getElementById('chat-btn');
+-        const chatWindow = document.getElementById('chat-window');
+-        const closeChat = document.getElementById('close-chat');
+-        
+-        chatBtn.addEventListener('click', () => {
+-            chatWindow.classList.toggle('hidden');
+-        });
+-        
+-        closeChat.addEventListener('click', () => {
+-            chatWindow.classList.add('hidden');
+-        });
+-
+-        // Chat functionality
+-        const chatMessages = document.getElementById('chat-messages');
+-        const chatInput = document.getElementById('chat-input');
+-        const sendMessage = document.getElementById('send-message');
+-        
+-        sendMessage.addEventListener('click', () => {
+-            const message = chatInput.value.trim();
+-            if (message) {
+-                // Add user message
+-                const userMessage = document.createElement('div');
+-                userMessage.className = 'mb-4 flex justify-end';
+-                userMessage.innerHTML = `
+-                    <div class="bg-indigo-600 text-white rounded-lg p-3 max-w-xs">
+-                        <p>${message}</p>
+-                    </div>
+-                `;
+-                chatMessages.appendChild(userMessage);
+-                
+-                // Clear input
+-                chatInput.value = '';
+-                
+-                // Scroll to bottom
+-                chatMessages.scrollTop = chatMessages.scrollHeight;
+-                
+-                // Simulate response after delay
+-                setTimeout(() => {
+-                    const responses = [
+-                        "Я понимаю вашу ситуацию. Для более точной консультации лучше обсудить детали по телефону.",
+-                        "Это серьезный вопрос. Давайте обсудим его подробнее на консультации.",
+-                        "Похожие случаи в моей практике были. Есть хорошие перспективы решения.",
+-                        "Рекомендую записаться на очную консультацию для детального разбора вашего вопроса."
+-                    ];
+-                    const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+-                    
+-                    const botMessage = document.createElement('div');
+-                    botMessage.className = 'mb-4';
+-                    botMessage.innerHTML = `
+-                        <div class="bg-indigo-100 text-gray-800 rounded-lg p-3 max-w-xs">
+-                            <p>${randomResponse}</p>
+-                            <p class="mt-2 text-sm">Вы можете позвонить мне прямо сейчас: <a href="tel:89190221318" class="text-indigo-600 font-medium">8 (919) 022-13-18</a></p>
+-                        </div>
+-                    `;
+-                    chatMessages.appendChild(botMessage);
+-                    
+-                    // Scroll to bottom
+-                    chatMessages.scrollTop = chatMessages.scrollHeight;
+-                }, 1000);
+-            }
+-        });
+-        
+-        // Allow sending message with Enter key
+-        chatInput.addEventListener('keypress', (e) => {
+-            if (e.key === 'Enter') {
+-                sendMessage.click();
+-            }
+-        });
++        <div class="panel-grid panel-grid--2">
++          <article class="card">
++            <h3>Отправка онлайн</h3>
++            <form id="hwForm" class="form-stack">
++              <label>Ответ ученика
++                <textarea name="answer" rows="4" required placeholder="Введите ответ..."></textarea>
++              </label>
++              <button class="btn btn--brand" type="submit">Отправить на проверку</button>
++              <p id="hwMsg" class="feedback" aria-live="polite"></p>
++            </form>
++          </article>
++          <article class="card">
++            <h3>Генератор офлайн-листа</h3>
++            <form id="offlineForm" class="form-stack">
++              <label>Тема<input name="topic" required placeholder="Travel phrases" /></label>
++              <label>Уровень
++                <select name="level" required>
++                  <option value="">Выберите</option>
++                  <option>A1-A2</option>
++                  <option>B1-B2</option>
++                  <option>C1-C2</option>
++                </select>
++              </label>
++              <button class="btn btn--light" type="submit">Сгенерировать</button>
++            </form>
++            <div id="offlineResult" class="result muted">Здесь будет лист для печати.</div>
++          </article>
++        </div>
++      </div>
++    </section>
++  </main>
+ 
+-        // Form submission
+-        const consultationForm = document.getElementById('consultation-form');
+-        
+-        consultationForm.addEventListener('submit', (e) => {
+-            e.preventDefault();
+-            
+-            // Get form values
+-            const name = document.getElementById('name').value;
+-            const phone = document.getElementById('phone').value;
+-            const question = document.getElementById('question').value;
+-            
+-            // Here you would typically send the data to a server
+-            // For demo purposes, we'll just show an alert
+-            alert(`Спасибо, ${name}! Ваш запрос получен. Я свяжусь с вами по номеру ${phone} в ближайшее время.`);
+-            
+-            // Reset form
+-            consultationForm.reset();
+-        });
++  <footer class="footer">
++    <div class="wrap footer__inner">
++      <p>© 2026 LinguaTrack Pro</p>
++      <a href="#home">Наверх</a>
++    </div>
++  </footer>
+ 
+-        // Smooth scrolling for anchor links
+-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+-            anchor.addEventListener('click', function (e) {
+-                e.preventDefault();
+-                
+-                const targetId = this.getAttribute('href');
+-                const targetElement = document.querySelector(targetId);
+-                
+-                if (targetElement) {
+-                    window.scrollTo({
+-                        top: targetElement.offsetTop - 80,
+-                        behavior: 'smooth'
+-                    });
+-                    
+-                    // Close mobile menu if open
+-                    if (!mobileMenu.classList.contains('hidden')) {
+-                        mobileMenu.classList.add('hidden');
+-                    }
+-                }
+-            });
+-        });
+-    </script>
+-<p style="border-radius: 8px; text-align: center; font-size: 12px; color: #fff; margin-top: 16px;position: fixed; left: 8px; bottom: 8px; z-index: 10; background: rgba(0, 0, 0, 0.8); padding: 4px 8px;">Made with <img src="https://enzostvs-deepsite.hf.space/logo.svg" alt="DeepSite Logo" style="width: 16px; height: 16px; vertical-align: middle;display:inline-block;margin-right:3px;filter:brightness(0) invert(1);"><a href="https://enzostvs-deepsite.hf.space" style="color: #fff;text-decoration: underline;" target="_blank" >DeepSite</a> - 🧬 <a href="https://enzostvs-deepsite.hf.space?remix=ykisimova/13-passion" style="color: #fff;text-decoration: underline;" target="_blank" >Remix</a></p></body>
+-</html>
+\ No newline at end of file
++  <script src="app.js"></script>
++</body>
++</html>
+ 
+EOF
+)
